@@ -1,10 +1,11 @@
 <template>
     <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item" href="/">
-       <img alt="Vue logo" src="../assets/logo.png" style = "heigh: 20px;">
-       W.D.Y.M.
-    </a>
+
+    <router-link class="navbar-item" to="/">
+      <i class="fas fa-home fa-pull-left"></i>
+      Home
+    </router-link> 
 
     <a @click.prevent="isOpen = !isOpen" role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
@@ -15,11 +16,6 @@
 
   <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active' : isOpen }"> 
     <div class="navbar-start">
-
-      <router-link class="navbar-item" to="/">
-      <i class="fas fa-home fa-pull-left"></i>
-      Home
-      </router-link> 
       <router-link class="navbar-item" to="/about">
       <i class="fab fa-vuejs fa-pull-left"></i>
       About
