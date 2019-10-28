@@ -2,7 +2,7 @@
     <nav class="navbar" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
 
-    <router-link class="navbar-item" to="/">
+    <router-link exact-active-class="active" class="navbar-item" to="/">
       <i class="fas fa-home fa-pull-left"></i>
       Home
     </router-link> 
@@ -16,20 +16,27 @@
 
   <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active' : isOpen }"> 
     <div class="navbar-start">
-      <router-link class="navbar-item" to="/about">
+      <router-link exact-active-class="active" class="navbar-item" to="/about">
       <i class="fab fa-vuejs fa-pull-left"></i>
       About
       </router-link>
 
+      <router-link exact-active-class="active" class="navbar-item" to="/game">
+      <i class="fas fa-ghost fa-pull-left"></i>
+      Game
+      </router-link>
+
       <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
+        <a class="navbar-link"  active-class="kind-of-active" >
           More
         </a>
 
         <div class="navbar-dropdown">
-          <a class="navbar-item">
-            About
-          </a>
+          <router-link class="navbar-item" to="/about" exact-active-class="active" >
+      <i class="fab fa-vuejs fa-pull-left"></i>
+      About
+      </router-link>
+
           <a class="navbar-item">
             Jobs
           </a>
@@ -71,5 +78,12 @@ export default {
 </script>
 
 <style >
-
+  .active {
+    background-color: aliceblue;
+    font-weight: bold;
+  }
+  .kind-of-active {
+    background-color: rgb(244, 247, 250);
+    font-weight: bold;
+  }
 </style>
