@@ -11,9 +11,10 @@
         <p class="panel-heading">
           Players
         </p>
-        <li v-for="(p, i) in game.Players" :key="i" class="panel-block is-active">
+        <li v-for="(p, i) in game.Players" :key="i" 
+            class="panel-block" :class="{ 'is-active': i == game.Dealer }">
           <span class="panel-icon">
-            <i class="fas fa-user" aria-hidden="true"></i>
+            <i class="fas" :class="i == game.Dealer ? 'fa-user-secret' : 'fa-user' " aria-hidden="true"></i>
           </span>  
           {{p.name}}
         </li>
@@ -31,7 +32,13 @@
     </div>
 
     <div class="column">
-      Second Column
+      <div class="box is-clickable" @click="pictureClicked">
+        <img  alt="Current Picture in Play" class="image is-fullwidth"
+              :src="game.Picture_In_Play" v-if="game.Picture_In_Play"/>
+        <div class="notification is-primary" v-else>
+          Flip First Picture
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -48,10 +55,19 @@ export default {
   }),
   created(){
     this.My_Captions = Game_Server.Get_Hand();
+  },
+  methods: {
+    pictureClicked(){
+      this.game.Picture_In_Play = Game_Server.Get_Next_Picture();
+      this.game.Dealer ++;
+    }
   }
 }
 </script>
 
 <style>
+  .is-clickable {
+    cursor: pointer;
 
+  }
 </style>
