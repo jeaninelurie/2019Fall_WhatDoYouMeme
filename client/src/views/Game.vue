@@ -19,9 +19,19 @@
         </li>
       </ul>
 
+      <ul class="panel">
+        <p class="panel-heading">
+          My Hand
+        </p>
+        <li v-for="(c, i) in My_Captions" :key="i" class="panel-block is-active">
+          {{c}}
+        </li>
+      </ul>
+
     </div>
+
     <div class="column">
-      Second column
+      Second Column
     </div>
   </div>
 </div>
@@ -33,7 +43,8 @@ import { Game_Client, My_Captions } from "../models/Game" ;
 
 export default {
   data: () => ({
-    game: Game_Client
+    game: Game_Client,
+    My_Captions
   })
 }
 </script>

@@ -22,7 +22,13 @@ export const Game_Client = {
     Caption_Chosen: -1
 }
 
-export var My_Captions = [];
+export var My_Captions = [
+        "I'm gonna have to charge you extra.", 
+        "I think it's time to call for backup.", 
+        "You want fries with that?",
+        "Is it too late to apologize?",
+        "Feed me!",
+        "How you doin?"];
 
 export class Player {
     name;
