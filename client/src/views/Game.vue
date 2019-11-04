@@ -39,13 +39,16 @@
 </template>
 
 <script>
-import { Game_Client, My_Captions } from "../models/Game" ;
+import { Game_Client, Game_Server, My_Captions } from "../models/Game" ;
 
 export default {
   data: () => ({
     game: Game_Client,
     My_Captions
-  })
+  }),
+  created(){
+    this.My_Captions = Game_Server.Get_Hand();
+  }
 }
 </script>
 
