@@ -18,7 +18,7 @@ export async function api(url, data){
     if(response.ok){
         return await response.json();
     } else{
-        throw response.json();
+        throw await response.json();
     }
     
 }
