@@ -20,5 +20,9 @@ app.post('/players', (req, res) => {
     const player_id = Game.Join(req.body.name);
     res.send({ success: true, player_id });
 });
+app.post('/captions_in_play', (req, res) => {
+    Game.Submit_Caption(req.user_id, req.body.text);
+    res.send({ success: true});
+});
 
 module.exports = app;
