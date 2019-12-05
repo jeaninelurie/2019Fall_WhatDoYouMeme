@@ -12,7 +12,7 @@
           Players
         </p>
         <li v-for="(p, i) in game.Players" :key="i" 
-            class="panel-block" :class="{ 'is-active': i == game.Dealer }">
+            class="panel-block" :class="{ 'is-active': i == game.Dealer, 'has text-primary': i == me.User_Id }">
           <span class="panel-icon">
             <i class="fas" :class="i == game.Dealer ? 'fa-user-secret' : 'fa-user' " aria-hidden="true"></i>
           </span>  
@@ -47,8 +47,14 @@
           Captions In Play
         </p>
         <li v-for="(c, i) in game.Captions_In_Play" :key="i" class="panel-block is-active">
-          
-          {{c}}
+          <div class="is-expanded">{{c.text}}</div>
+          <span class="tag " :class=" game.Caption_Chose > -1 ? 'is-primary' : 'is-light'">{{c.player}}</span>
+          <button class="button is-small is-primary"
+                  @click.prevent="chooseCaption(i)"
+                  v-show="me.User_Id == game.Dealer && game.Caption_Chosen == -1"
+                  :disabled="game.Captions_In_Play.length < game.Players.length - 1">
+                  Choose
+          </button>
         </li>
       </ul>
 
@@ -60,11 +66,13 @@
 
 <script>
 import { Game_Server } from "../models/Game" ;
+import toastr from "vanillatoasts/vanillatoasts";
 
 export default {
   data: () => ({
     game: {},
-    My_Captions: []
+    My_Captions: [],
+    me: Game_Server.User
   }),
   async created(){
     this.My_Captions = await Game_Server.Get_Hand();
@@ -73,11 +81,18 @@ export default {
   },
   methods: {
     pictureClicked(){
-      Game_Server.Flip_Picture();
+      Game_Server.Flip_Picture().catch(err=> toastr.create({ text: err.message, type: 'error', }));
     },
     async submitCaption(caption, i){
-      const response = await Game_Server.Submit_Caption(caption);
-      this.My_Captions.splice(i, 1);
+      try{
+        const response = await Game_Server.Submit_Caption(caption);
+        this.My_Captions.splice(i, 1);
+      } catch(err){
+        toastr.create({ text: err.message, type: 'error', });
+      }
+    },
+    chooseCaption(i){
+      Game_Server.Choose_Caption(i).catch(err=> toastr.create({ text: err.message, type: 'error', }));
     }
   }
 }
@@ -87,5 +102,11 @@ export default {
   .is-clickable {
     cursor: pointer;
 
+  }
+  .is-expanded {
+    flex-grow: 1;
+  }
+  #vanillatoasts-container{
+    z-index: 100;
   }
 </style>
